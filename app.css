@@ -1,0 +1,29 @@
+body, html {
+  background-color: rgb(50, 49, 49);
+}
+
+.jumbotron {
+  background-color: rgb(57, 52, 52);
+  color: azure;
+}
+
+.randomColor{
+  font-weight: bolder;
+  font-size: 1.5em;
+}
+
+tr td {
+  height: 13em;
+  width: 18em;
+  border: solid pink 5px;
+  border-radius: 30px!important;
+}
+
+.color-grid{
+  border-collapse: separate!important;
+  border-spacing: 15px 15px!important;
+}
+
+.hidden {
+  display: none;
+}
