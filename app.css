@@ -7,6 +7,10 @@ body, html {
   color: azure;
 }
 
+a {
+  color: limegreen!important;
+}
+
 .randomColor{
   font-weight: bolder;
   font-size: 1.5em;
@@ -15,7 +19,7 @@ body, html {
 tr td {
   height: 13em;
   width: 18em;
-  border: solid pink 5px;
+  border: solid rgb(105, 233, 210) 5px;
   border-radius: 30px!important;
 }
 

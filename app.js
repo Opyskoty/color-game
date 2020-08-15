@@ -1,19 +1,5 @@
 let chosenColor;
 
-//generate a color based on random rbg code
-const randomRgb = () => {
-  const r = randNum(0, 255);
-  const g = randNum(0, 255);
-  const b = randNum(0, 255);
-  return `rgb(${r}, ${g}, ${b})`;
-};
-
-//finds a random number between two numbers
-const randNum = (min, max) => {
-  let num = min + Math.floor(Math.random() * (max - min + 1));
-  return num;
-};
-
 //create the grid
 const fillColorTable = () => {
   for (let i = 0; i < 2; i++) {
@@ -34,17 +20,38 @@ const fillSquaresAndPickMatch = () => {
   $(colorMatch).css("background-color", chosenColor);
 };
 
-//check for winner;
-$(".color-grid").on("click", ".box", function (evt) {
-  if ($(evt.target).css("background-color") === chosenColor) {
-    $("#myModal").modal("show");
-  } else {
-    $(".alert").removeClass("hidden");
+const generatedColor = () => {
+  $(".randomColor").text(randomRgb());
+  chosenColor = $(".randomColor").text();
+};
 
-    setTimeout(function () {
-      $(".alert").addClass("hidden");
-    }, 1000);
-  }
+//check for winner;
+const checkForWinner = () => {
+  $(".color-grid").on("click", ".box", function (evt) {
+    if ($(evt.target).css("background-color") === chosenColor) {
+      $("#myModal").modal("show");
+    } else {
+      $(".alert").removeClass("hidden");
+
+      setTimeout(function () {
+        $(".alert").addClass("hidden");
+      }, 1000);
+    }
+  });
+};
+
+//event handler after clicking generate color button
+$(".make-color").on("click", function () {
+  clickBoxes();
+  generatedColor();
+  fillSquaresAndPickMatch();
+  //disable generate color button;
+  $(".make-color").prop("disabled", true);
+  //add restart button;
+  let $restartBtn = $(
+    `<button type="button" class="btn btn-warning restartGame">Restart</button>`
+  );
+  $(".game-buttons").append($restartBtn);
 });
 
 //restart game from modal:
@@ -58,17 +65,27 @@ $(".game-buttons").on("click", ".restartGame", function () {
   location.reload();
 });
 
+//make boxes clickable:
+const clickBoxes = () => {
+  $(".box").bind("click", checkForWinner);
+  $(".box").css("cursor", "pointer");
+};
+
+//generate a color based on random rbg code
+const randomRgb = () => {
+  const r = randNum(0, 255);
+  const g = randNum(0, 255);
+  const b = randNum(0, 255);
+  return `rgb(${r}, ${g}, ${b})`;
+};
+
+//finds a random number between two numbers
+const randNum = (min, max) => {
+  let num = min + Math.floor(Math.random() * (max - min + 1));
+  return num;
+};
+
 $(() => {
   fillColorTable();
+  $(".color-grid").unbind("click", checkForWinner);
 });
-
-  $(".make-color").on("click", function () {
-    $(".randomColor").text(randomRgb());
-    chosenColor = $(".randomColor").text();
-    fillSquaresAndPickMatch();
-    $(".make-color").prop("disabled", true);
-    let $restartBtn = $(
-      `<button type="button" class="btn btn-warning restartGame">Restart</button>`
-    );
-    $(".game-buttons").append($restartBtn);
-  });
